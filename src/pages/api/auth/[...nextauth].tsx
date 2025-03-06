@@ -28,6 +28,8 @@ const microsoftEntraProvider = MicrosoftEntraProvider({
   clientSecret: process.env.MICROSOFT_ENTRA_CLIENT_SECRET!,
   // Endpoints > WS-Federation sign-on endpoint
   issuer: process.env.MICROSOFT_ENTRA_ISSUER!,
+  // Tenant (default common)
+  tenant: process.env.MICROSOFT_ENTRA_TENANT || "common",
 });
 
 const adapter = PrismaAdapter(prisma);

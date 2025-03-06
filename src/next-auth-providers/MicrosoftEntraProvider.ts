@@ -4,6 +4,7 @@ type MicrosoftEntraConfig = {
   clientId: string;
   clientSecret: string;
   issuer: string;
+  tenant: string;
 };
 
 export const MicrosoftEntraProvider = (
@@ -17,14 +18,22 @@ export const MicrosoftEntraProvider = (
     client: { token_endpoint_auth_method: "client_secret_post" },
     issuer: "https://microsoftonline.com",
     authorization: {
-      url: "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+      url:
+        "https://login.microsoftonline.com/" +
+        config.tenant +
+        "/oauth2/v2.0/authorize",
       params: { scope: "openid profile email User.Read" },
     },
     wellKnown:
-      "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration",
+      "https://login.microsoftonline.com/" +
+      config.tenant +
+      "/v2.0/.well-known/openid-configuration",
     checks: ["state"],
     token: {
-      url: "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+      url:
+        "https://login.microsoftonline.com/" +
+        config.tenant +
+        "/oauth2/v2.0/token",
     },
     async profile(profile: any, tokens: any) {
       // https://learn.microsoft.com/en-us/graph/api/profilephoto-get?view=graph-rest-1.0&tabs=http#examples
